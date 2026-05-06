@@ -1,14 +1,15 @@
 /*
- Theme Name:   Understrap Child
- Theme URI:    https://understrap.com
- Description:  Understrap Child Theme
- Author:       the Understrap Contributors
- Author URI:   https://github.com/understrap/understrap-child/graphs/contributors
- Template:     understrap
- Version:      1.2.0
- License: GNU General Public License v2 or later
- License URI: http://www.gnu.org/licenses/gpl-2.0.html
- Text Domain:  understrap-child
- Tags: one-column, custom-menu, featured-images, theme-options, translation-ready
- GitHub Theme URI: understrap/understrap-child
+Theme Name:   Divergentes Child
+Theme URI:    https://divergentes.com
+Description:  Child theme de Divergentes. Permite personalizar páginas individuales sin modificar el tema padre.
+Author:       Equipo DIVERGENTES
+Template:     understrap
+Version:      1.0.0
+Text Domain:  divergentes-child
+*/
+
+/*
+  Este archivo es requerido por WordPress para reconocer el child theme.
+  Los estilos del tema padre se cargan automáticamente via functions.php.
+  Los estilos específicos de cada página están en /assets/
 */

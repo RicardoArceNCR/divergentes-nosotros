@@ -1,0 +1,423 @@
+/* =============================================================================
+   DIVERGENTES — Página Nosotros
+   Estilos exclusivos. Se cargan SOLO en page-nosotros.php via functions.php
+   Design System v1.0 · Mayo 2026
+   ============================================================================= */
+
+/* ─── DESIGN SYSTEM TOKENS ─────────────────────────────────────────────────── */
+:root {
+  /* Primitivos — Brand */
+  --brand-red-50:  #fff0f4;
+  --brand-red-100: #ffdde5;
+  --brand-red-400: #ff5781;
+  --brand-red-600: #ff003f;
+  --brand-red-900: #920a2c;
+  --brand-red-950: #500014;
+
+  --brand-navy-50:  #eef3f7;
+  --brand-navy-100: #d6e3ec;
+  --brand-navy-200: #c8d5e0;
+  --brand-navy-300: #7fa3ba;
+  --brand-navy-600: #1b4460;
+  --brand-navy-800: #1b2a3b;
+  --brand-navy-900: #14364e;
+  --brand-navy-950: #0d1b2a;
+
+  /* Primitivos — Neutral */
+  --neutral-0:   #ffffff;
+  --neutral-50:  #f7f7f8;
+  --neutral-100: #f0f0f1;
+  --neutral-200: #e4e4e6;
+  --neutral-300: #d1d1d4;
+  --neutral-400: #b8b8bc;
+  --neutral-500: #8e8e93;
+  --neutral-600: #6b6b70;
+  --neutral-700: #4a4a50;
+  --neutral-800: #2c2c32;
+  --neutral-900: #18181c;
+
+  /* Semánticos */
+  --brand-main:     var(--brand-red-600);
+  --brand-strong:   var(--brand-red-400);
+  --brand-stronger: var(--brand-red-900);
+
+  --text-primary:   var(--brand-navy-900);
+  --text-secondary: var(--neutral-600);
+  --text-tertiary:  var(--neutral-500);
+  --text-inverse:   var(--neutral-0);
+
+  --bg-page:   var(--neutral-0);
+  --bg-base:   var(--neutral-50);
+  --bg-subtle: var(--neutral-100);
+
+  --surface-raised: var(--neutral-0);
+
+  --border-subtle:  var(--neutral-300);
+  --border-default: var(--neutral-400);
+
+  --section-divider: var(--neutral-200);
+  --editorial-rule:  var(--brand-main);
+
+  /* Tokens de componentes — página Nosotros */
+  --person-card-photo-bg:   var(--brand-navy-900);
+  --person-card-role-color: var(--brand-main);
+  --dept-rule-width:        28px;
+  --dept-rule-height:       2px;
+  --sidenav-active-color:   var(--brand-main);
+  --sidenav-width:          196px;
+  --hero-stat-label-tracking: 0.10em;
+  --finance-strip-bg:       var(--brand-navy-950);
+  --finance-logo-color:     var(--brand-main);
+
+  /* Tipografías */
+  --font-display: 'Anton', sans-serif;
+  --font-body:    'Lora', serif;
+  --font-ui:      'Archivo', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* Espaciado */
+  --sp-1: 4px;  --sp-2: 8px;   --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 20px; --sp-6: 24px;  --sp-7: 28px; --sp-8: 32px;
+  --sp-10: 40px; --sp-12: 48px; --sp-16: 64px;
+
+  /* Radio */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-full: 9999px;
+
+  /* Movimiento */
+  --motion-fast:   100ms ease;
+  --motion-normal: 150ms ease;
+  --motion-slow:   250ms ease;
+}
+
+/* ─── RESET SCOPED A .nosotros-page ────────────────────────────────────────
+   Usamos una clase wrapper para no romper estilos globales del tema padre.
+   El template añade esta clase al <body> via body_class filter.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Ocultar elementos del tema padre que no deben verse en esta página */
+.nosotros-page .site-header,
+.nosotros-page #masthead,
+.nosotros-page .navbar_top,
+.nosotros-page #navbar_top { display: none !important; }
+
+/* Resetear paddings que el tema padre aplica al content area */
+.nosotros-page #content,
+.nosotros-page .site-content,
+.nosotros-page #primary,
+.nosotros-page .entry-content,
+.nosotros-page article,
+.nosotros-page .post-content { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+
+/* ─── MASTHEAD PROPIO ────────────────────────────────────────────────────── */
+.nos-masthead {
+  background: var(--neutral-0);
+  border-bottom: 1px solid var(--section-divider);
+  position: sticky; top: 0; z-index: 200;
+  width: 100%;
+}
+.nos-masthead__inner {
+  display: flex; align-items: center; gap: var(--sp-6);
+  padding: 14px var(--sp-6);
+  max-width: 1280px; margin: 0 auto;
+}
+.nos-brand {
+  text-decoration: none; display: flex; align-items: center;
+  gap: 6px; flex-shrink: 0;
+}
+.nos-brand__mark {
+  font-family: var(--font-display); font-size: 20px; color: var(--text-primary);
+}
+.nos-brand__dot { color: var(--brand-main); }
+.nos-brand__name {
+  font-family: var(--font-display); font-size: 15px;
+  color: var(--text-primary); letter-spacing: 0.06em;
+}
+.nos-masthead__nav {
+  display: flex; gap: var(--sp-5); align-items: center;
+  flex: 1; overflow-x: auto;
+}
+.nos-masthead__nav a {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none;
+  text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap;
+  transition: color var(--motion-normal);
+}
+.nos-masthead__nav a:hover,
+.nos-masthead__nav a[aria-current="page"] { color: var(--brand-main); }
+.nos-kicker {
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.08em; flex-shrink: 0;
+}
+
+/* ─── HERO ──────────────────────────────────────────────────────────────── */
+.nos-hero {
+  padding: var(--sp-16) var(--sp-6) 56px;
+  border-bottom: 1px solid var(--section-divider);
+  background: var(--bg-page);
+}
+.nos-hero__grid {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--sp-16); align-items: center;
+}
+.nos-hero__eyebrow {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--text-tertiary); text-transform: uppercase;
+  letter-spacing: var(--hero-stat-label-tracking); margin-bottom: var(--sp-4);
+}
+.nos-hero__title { margin: 0; line-height: 0.93; }
+.nos-hero__line {
+  display: block; font-family: var(--font-display);
+  font-size: clamp(60px, 7.5vw, 108px); text-transform: uppercase;
+  color: var(--text-primary); letter-spacing: -0.02em;
+}
+.nos-hero__line--alt {
+  font-family: var(--font-body); font-style: italic; font-weight: 600;
+  color: var(--brand-main); font-size: clamp(52px, 6.8vw, 96px);
+  text-transform: none; letter-spacing: -0.01em;
+}
+.nos-hero__lede { display: flex; flex-direction: column; gap: var(--sp-8); }
+.nos-hero__lede > p {
+  font-family: var(--font-body); font-size: 17px; line-height: 1.72;
+  color: var(--text-primary); margin: 0;
+}
+.nos-hero__stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-6); margin: 0; padding-top: var(--sp-6);
+  border-top: 1px solid var(--section-divider);
+}
+.nos-hero__stats > div { display: flex; flex-direction: column; gap: 6px; }
+.nos-hero__stats dt {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: var(--hero-stat-label-tracking);
+  color: var(--text-tertiary);
+}
+.nos-hero__stats dd {
+  font-family: var(--font-display); font-size: 40px;
+  color: var(--text-primary); margin: 0; line-height: 1;
+}
+
+/* ─── LAYOUT: ROSTER + SIDENAV ──────────────────────────────────────────── */
+.nos-page-body {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr var(--sidenav-width);
+  align-items: start; padding: 0 var(--sp-6);
+}
+
+/* ─── SIDENAV DERECHA ───────────────────────────────────────────────────── */
+.nos-sidenav {
+  position: sticky; top: 80px;
+  padding: var(--sp-12) 0 var(--sp-12) var(--sp-8);
+  border-left: 1px solid var(--section-divider);
+  margin-left: var(--sp-6);
+}
+.nos-sidenav__label {
+  font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+  letter-spacing: var(--hero-stat-label-tracking); color: var(--text-tertiary);
+  display: block; margin-bottom: var(--sp-4);
+}
+.nos-sidenav a {
+  display: block; font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  color: var(--text-secondary); text-decoration: none;
+  padding: 5px 0 5px var(--sp-3);
+  margin-left: -13px; border-left: 2px solid transparent;
+  line-height: 1.35;
+  transition: color var(--motion-normal), border-color var(--motion-normal);
+}
+.nos-sidenav a:hover { color: var(--text-primary); }
+.nos-sidenav a.is-active {
+  color: var(--sidenav-active-color);
+  border-left-color: var(--sidenav-active-color);
+  font-weight: 600;
+}
+
+/* ─── ROSTER ────────────────────────────────────────────────────────────── */
+.nos-roster {
+  padding: var(--sp-12) var(--sp-10) var(--sp-16) 0;
+}
+
+/* Sección de departamento */
+.nos-dept { margin-bottom: var(--sp-16); scroll-margin-top: 96px; }
+.nos-dept__header {
+  display: flex; align-items: center; gap: var(--sp-3);
+  margin-bottom: var(--sp-7);
+  padding-bottom: var(--sp-3); border-bottom: 1px solid var(--section-divider);
+}
+.nos-dept__rule {
+  width: var(--dept-rule-width); height: var(--dept-rule-height);
+  background: var(--editorial-rule); flex-shrink: 0;
+}
+.nos-dept__title {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+  color: var(--text-primary); margin: 0; text-transform: uppercase;
+  letter-spacing: 0.08em; flex: 1;
+}
+.nos-dept__count {
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary);
+}
+
+/* Grillas */
+.nos-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-6); }
+.nos-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-6); }
+
+/* ─── TARJETA DE PERSONA ─────────────────────────────────────────────────── */
+.nos-card { display: flex; flex-direction: column; }
+
+/* Foto — retrato 3:4 con B&W */
+.nos-card__photo-wrap {
+  position: relative; width: 100%; aspect-ratio: 3 / 4;
+  overflow: hidden; background: var(--person-card-photo-bg);
+  margin-bottom: var(--sp-4);
+}
+.nos-card__photo {
+  width: 100%; height: 100%; object-fit: cover; object-position: top center;
+  filter: grayscale(100%) contrast(1.08);
+  transition: filter 350ms ease, transform 400ms ease; display: block;
+}
+.nos-card:hover .nos-card__photo {
+  filter: grayscale(40%) contrast(1.05); transform: scale(1.03);
+}
+/* Placeholder de iniciales */
+.nos-card__initials {
+  width: 100%; height: 100%; background: var(--person-card-photo-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px);
+  color: rgba(255,255,255,0.12); letter-spacing: -0.02em;
+  user-select: none;
+}
+/* Overlay gradiente + redes sociales */
+.nos-card__photo-wrap::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,27,42,0.65) 0%, transparent 55%);
+  opacity: 0; transition: opacity var(--motion-slow); pointer-events: none;
+}
+.nos-card:hover .nos-card__photo-wrap::after { opacity: 1; }
+.nos-card__social {
+  position: absolute; bottom: 12px; left: 12px;
+  display: flex; gap: 6px; z-index: 2;
+  opacity: 0; transform: translateY(5px);
+  transition: opacity var(--motion-slow), transform var(--motion-slow);
+}
+.nos-card:hover .nos-card__social { opacity: 1; transform: translateY(0); }
+.nos-card__social a {
+  width: 28px; height: 28px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.22);
+  border-radius: var(--radius-sm); display: flex; align-items: center;
+  justify-content: center; color: #fff; text-decoration: none;
+  font-size: 10px; font-family: var(--font-ui); font-weight: 700;
+  backdrop-filter: blur(6px);
+  transition: background var(--motion-normal);
+}
+.nos-card__social a:hover { background: rgba(255,0,63,0.55); border-color: rgba(255,0,63,0.4); }
+
+/* Texto de la tarjeta */
+.nos-card__name {
+  font-family: var(--font-ui); font-size: 14px; font-weight: 700;
+  color: var(--text-primary); margin: 0 0 3px; line-height: 1.3;
+}
+.nos-card__role {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+  color: var(--person-card-role-color); margin: 0 0 var(--sp-2);
+}
+.nos-card__bio {
+  font-family: var(--font-body); font-size: 13px; line-height: 1.65;
+  color: var(--text-secondary); margin: 0 0 var(--sp-3);
+  display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+}
+.nos-card__location {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono); font-size: 10px; color: var(--text-tertiary);
+}
+.nos-card__location::before { content: '◎'; color: var(--brand-main); font-size: 9px; }
+
+/* ─── BANDA DE FINANZAS ──────────────────────────────────────────────────── */
+.nos-finance {
+  background: var(--finance-strip-bg);
+  padding: var(--sp-12) var(--sp-6);
+}
+.nos-finance__inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; gap: var(--sp-10);
+}
+.nos-finance__dept {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--brand-navy-300); flex-shrink: 0; line-height: 1.5;
+  border-right: 1px solid rgba(255,255,255,0.08); padding-right: var(--sp-10);
+}
+.nos-finance__logo {
+  font-family: var(--font-display); font-size: 44px;
+  color: var(--finance-logo-color); line-height: 1; flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+.nos-finance__logo em { color: rgba(255,255,255,0.2); font-style: normal; }
+.nos-finance__copy { flex: 1; }
+.nos-finance__copy p {
+  font-family: var(--font-body); font-size: 14px; line-height: 1.65;
+  color: var(--brand-navy-300); margin: 0;
+}
+.nos-finance__link {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  color: var(--neutral-0); text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 1px;
+  margin-top: var(--sp-3); display: inline-block;
+  transition: color var(--motion-normal), border-color var(--motion-normal);
+}
+.nos-finance__link:hover { color: var(--brand-main); border-color: var(--brand-main); }
+
+/* ─── FOOTER PROPIO ─────────────────────────────────────────────────────── */
+.nos-footer {
+  background: var(--brand-navy-950);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: var(--sp-10) var(--sp-6);
+}
+/* Ocultar el footer del tema padre en esta página */
+.nosotros-page .site-footer,
+.nosotros-page #colophon,
+.nosotros-page footer.entry-footer { display: none !important; }
+
+.nos-footer__inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--sp-6); flex-wrap: wrap;
+}
+.nos-footer__mark {
+  font-family: var(--font-display); font-size: 36px;
+  color: var(--neutral-0); line-height: 1;
+}
+.nos-footer__mark span { color: var(--brand-main); }
+.nos-footer__links { display: flex; gap: var(--sp-5); flex-wrap: wrap; }
+.nos-footer__links a {
+  font-family: var(--font-ui); font-size: 12px; color: var(--brand-navy-300);
+  text-decoration: none; transition: color var(--motion-normal);
+}
+.nos-footer__links a:hover { color: var(--neutral-0); }
+.nos-footer__credit {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--brand-navy-300); margin: 0; width: 100%;
+}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .nos-page-body { grid-template-columns: 1fr; }
+  .nos-sidenav   { display: none; }
+  .nos-roster    { padding-right: 0; }
+  .nos-grid-3    { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .nos-hero__grid  { grid-template-columns: 1fr; gap: var(--sp-10); }
+  .nos-grid-3,
+  .nos-grid-2      { grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+  .nos-finance__inner { flex-direction: column; align-items: flex-start; gap: var(--sp-5); }
+  .nos-finance__dept  { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding-right: 0; padding-bottom: var(--sp-5); }
+}
+@media (max-width: 540px) {
+  .nos-grid-3,
+  .nos-grid-2        { grid-template-columns: 1fr; }
+  .nos-masthead__nav { display: none; }
+  .nos-hero__line    { font-size: clamp(48px, 13vw, 80px); }
+  .nos-hero__line--alt { font-size: clamp(40px, 11vw, 68px); }
+}
