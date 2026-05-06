@@ -1,0 +1,274 @@
+/*
+ * tokens-bridge.css — DIVERGENTES Design System
+ * ─────────────────────────────────────────────────────────────────────────
+ * Archivo generado desde export.json (Figma Tokens / Variables).
+ *
+ * PROPÓSITO:
+ * Traduce los tokens del design system a CSS custom properties reales.
+ * Se carga DESPUÉS de Bootstrap y ANTES de nosotros.css para que los
+ * valores del design system sobreescriban los defaults de Bootstrap.
+ *
+ * ORDEN DE CARGA EN functions.php:
+ *   1. Bootstrap (understrap-styles / tema padre)
+ *   2. tokens-bridge.css  ← este archivo
+ *   3. nosotros.css
+ *
+ * PARA ACTUALIZAR:
+ * Editar solo este archivo cuando cambien los valores del design system.
+ * No tocar nosotros.css para cambios de color/tipografía — usar variables.
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+
+:root {
+
+  /* ── PRIMITIVOS: Colores de marca ────────────────────────────────────── */
+
+  /* Red (brand principal) */
+  --color-red-50:   #fff0f4;
+  --color-red-100:  #ffdde5;
+  --color-red-200:  #ffc0d0;
+  --color-red-300:  #ff94ae;
+  --color-red-400:  #ff5781;
+  --color-red-500:  #ff2359;
+  --color-red-600:  #ff003f;
+  --color-red-700:  #d70035;
+  --color-red-800:  #b1032e;
+  --color-red-900:  #920a2c;
+  --color-red-950:  #500014;
+
+  /* Navy (texto principal) */
+  --color-navy-50:  #eef3f7;
+  --color-navy-100: #d6e3ec;
+  --color-navy-200: #c8d5e0;
+  --color-navy-300: #7fa3ba;
+  --color-navy-400: #4f7d9b;
+  --color-navy-500: #2e5f7e;
+  --color-navy-600: #1b4460;
+  --color-navy-700: #253c52;
+  --color-navy-800: #1b2a3b;
+  --color-navy-900: #14364e;
+  --color-navy-950: #0d1b2a;
+
+  /* Blue (acento informativo) */
+  --color-blue-50:  #f2f9fd;
+  --color-blue-100: #e4f1fa;
+  --color-blue-200: #c3e2f4;
+  --color-blue-300: #8ecceb;
+  --color-blue-400: #51b1df;
+  --color-blue-500: #2b98cc;
+  --color-blue-600: #1c7aad;
+  --color-blue-700: #18618c;
+  --color-blue-800: #185374;
+  --color-blue-900: #194661;
+  --color-blue-950: #14364e;
+
+  /* Neutral */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-50:  #f7f7f8;
+  --color-neutral-100: #f0f0f1;
+  --color-neutral-200: #e4e4e6;
+  --color-neutral-300: #d1d1d4;
+  --color-neutral-400: #b8b8bc;
+  --color-neutral-500: #8e8e93;
+  --color-neutral-600: #6b6b70;
+  --color-neutral-700: #4a4a50;
+  --color-neutral-800: #2c2c32;
+  --color-neutral-900: #18181c;
+  --color-neutral-950: #0c0c0e;
+
+  /* ── SEMÁNTICOS: Marca ───────────────────────────────────────────────── */
+  --brand-main:     var(--color-red-600);     /* #ff003f — rojo principal   */
+  --brand-strong:   var(--color-red-400);     /* #ff5781 — hover de botones */
+  --brand-stronger: var(--color-red-900);     /* #920a2c — active           */
+  --brand-subtle:   var(--color-red-100);     /* #ffdde5 — fondos suaves    */
+  --brand-contrast: var(--color-red-950);     /* #500014 — máximo contraste */
+  --brand-navy:     var(--color-navy-900);    /* #14364e — navy del logo    */
+
+  /* ── SEMÁNTICOS: Texto ───────────────────────────────────────────────── */
+  --text-primary:   var(--color-navy-900);    /* #14364e */
+  --text-secondary: var(--color-neutral-600); /* #6b6b70 */
+  --text-tertiary:  var(--color-neutral-500); /* #8e8e93 */
+  --text-disabled:  var(--color-neutral-400); /* #b8b8bc */
+  --text-inverse:   var(--color-neutral-0);   /* #ffffff */
+
+  /* ── SEMÁNTICOS: Fondos ──────────────────────────────────────────────── */
+  --bg-page:        var(--color-neutral-0);   /* #ffffff */
+  --bg-base:        var(--color-neutral-50);  /* #f7f7f8 */
+  --bg-subtle:      var(--color-neutral-100); /* #f0f0f1 */
+  --bg-strong:      var(--color-neutral-200); /* #e4e4e6 */
+  --bg-none:        rgba(255, 255, 255, 0);
+
+  /* ── SEMÁNTICOS: Bordes ──────────────────────────────────────────────── */
+  --border-default: var(--color-neutral-400); /* #b8b8bc */
+  --border-subtle:  var(--color-neutral-300); /* #d1d1d4 */
+  --border-strong:  var(--color-neutral-500); /* #8e8e93 */
+  --border-brand:   var(--brand-main);
+  --border-none:    rgba(0, 0, 0, 0);
+
+  /* ── SEMÁNTICOS: Superficies ─────────────────────────────────────────── */
+  --surface-raised:     var(--color-neutral-0);   /* #ffffff */
+  --surface-container:  var(--color-neutral-100); /* #f0f0f1 */
+  --surface-subtle:     var(--color-neutral-100); /* #f0f0f1 */
+
+  /* ── SEMÁNTICOS: Feedback ────────────────────────────────────────────── */
+  --feedback-success-bg:     #f0fdfa;
+  --feedback-success-border: #96f9e9;
+  --feedback-success-text:   #11504e;
+  --feedback-success-solid:  #099890;
+
+  --feedback-warning-bg:     #fff8ed;
+  --feedback-warning-border: #fedeaa;
+  --feedback-warning-text:   #7c3512;
+  --feedback-warning-solid:  #ea690c;
+
+  --feedback-error-bg:       #fff0f4;
+  --feedback-error-border:   #ffc0d0;
+  --feedback-error-text:     #920a2c;
+  --feedback-error-solid:    #ff003f;
+
+  --feedback-info-bg:        #f2f9fd;
+  --feedback-info-border:    #c3e2f4;
+  --feedback-info-text:      #194661;
+  --feedback-info-solid:     #1c7aad;
+
+  /* ── SEMÁNTICOS: Overlays ────────────────────────────────────────────── */
+  /* NOTA: valores originales tenían error de escala (0.0008 en vez de 0.08) */
+  /* Corregidos al factor ×100 correcto:                                     */
+  --overlay-hover-subtle:  rgba(0, 0, 0, 0.04);
+  --overlay-hover-medium:  rgba(0, 0, 0, 0.07);
+  --overlay-hover-strong:  rgba(0, 0, 0, 0.10);
+  --overlay-press-subtle:  rgba(0, 0, 0, 0.07);
+  --overlay-press-medium:  rgba(0, 0, 0, 0.12);
+  --overlay-hero:          rgba(0, 0, 0, 0.72);
+  --overlay-card:          rgba(0, 0, 0, 0.60);
+  --overlay-modal:         rgba(0, 0, 0, 0.80);
+  --overlay-scrim:         rgba(0, 0, 0, 0.72);
+
+  /* ── SEMÁNTICOS: Sombras ─────────────────────────────────────────────── */
+  /* Idem — corregidas de 0.0004-0.002 a valores visibles                  */
+  --shadow-xs: 0 1px 2px rgba(14, 27, 42, 0.04);
+  --shadow-sm: 0 1px 4px rgba(14, 27, 42, 0.07);
+  --shadow-md: 0 2px 8px rgba(14, 27, 42, 0.10);
+  --shadow-lg: 0 4px 16px rgba(14, 27, 42, 0.14);
+  --shadow-xl: 0 8px 32px rgba(14, 27, 42, 0.20);
+
+  /* ── TIPOGRAFÍA ──────────────────────────────────────────────────────── */
+  --font-display: 'Sora', sans-serif;
+  --font-body:    'Source Serif 4', serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --text-xs:         12px;
+  --text-sm:         14px;
+  --text-md:         16px;
+  --text-lg:         18px;
+  --text-xl:         20px;
+  --text-2xl:        24px;
+  --text-3xl:        28px;
+  --text-display:    28px;
+  --text-display-lg: 40px;
+  --text-display-xl: 64px;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-extrabold:800;
+
+  --leading-tight:   1.05;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.75;
+
+  --tracking-tight:  -0.03em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.06em;
+  --tracking-wider:   0.10em;
+
+  /* ── ESPACIADO ───────────────────────────────────────────────────────── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* ── RADIOS ──────────────────────────────────────────────────────────── */
+  --radius-none: 0px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* ── MOTION ──────────────────────────────────────────────────────────── */
+  --duration-fast:   100ms;
+  --duration-normal: 150ms;
+  --duration-slow:   250ms;
+  --duration-slower: 400ms;
+  --ease-default:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── BREAKPOINTS (referencia — no usables en CSS nativo como vars) ───── */
+  /* sm: 640px | md: 768px | lg: 1024px | xl: 1280px                       */
+
+  /* ── BRIDGE: Bootstrap 4 → Design System ────────────────────────────── */
+  /* Sobreescribe las variables de Bootstrap para que usen nuestros tokens. */
+  /* Requiere que Bootstrap esté compilado con CSS custom properties         */
+  /* (Bootstrap 5) o que el tema hijo no hardcodee $primary en SCSS.        */
+  --primary:   var(--brand-main);
+  --secondary: var(--color-navy-900);
+  --light:     var(--bg-base);
+  --dark:      var(--color-navy-900);
+  --body-color: var(--text-primary);
+  --body-bg:    var(--bg-page);
+
+}
+
+/*
+ * BRIDGE: Componentes de Bootstrap que deben usar los tokens
+ * Sobreescribe solo lo necesario — no reemplaza Bootstrap completo.
+ */
+
+/* Botón primario */
+.btn-primary {
+  background-color: var(--brand-main);
+  border-color:     var(--brand-main);
+  color:            var(--text-inverse);
+  border-radius:    var(--radius-full);
+}
+.btn-primary:hover {
+  background-color: var(--brand-strong);
+  border-color:     var(--brand-main);
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: var(--brand-stronger);
+  border-color:     var(--brand-stronger);
+}
+.btn-primary:focus,
+.btn-primary.focus {
+  box-shadow: 0 0 0 3px rgba(255, 0, 63, 0.25);
+}
+
+/* Navbar */
+.navbar.bg-primary {
+  background-color: var(--brand-navy) !important;
+}
+
+/* Links globales */
+a {
+  color: var(--brand-main);
+}
+a:hover {
+  color: var(--brand-strong);
+}
+a:visited {
+  color: var(--color-blue-700);
+}
+
+/* Body base */
+body {
+  color:       var(--text-primary);
+  background:  var(--bg-page);
+}

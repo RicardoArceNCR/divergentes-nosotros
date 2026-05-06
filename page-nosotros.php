@@ -2,22 +2,73 @@
 /**
  * Template Name: Nosotros
  *
- * Página del equipo de DIVERGENTES.
- * Entregable para el sitio de Divergentes — solo contenido,
- * sin header ni footer propios (los provee el tema del sitio).
+ * Página del equipo editorial de DIVERGENTES.
+ *
+ * CÓMO FUNCIONA:
+ * - get_header() y get_footer() son del sitio de Divergentes.
+ *   Ellos inyectan su propio header/footer global automáticamente.
+ * - Este template solo aporta: el contenido del roster + sus estilos.
+ * - Los estilos (nosotros.css) y scripts (nosotros.js) se encolan
+ *   via functions.php del child theme — no van hardcodeados aquí.
+ *
+ * INSTALACIÓN EN DIVERGENTES:
+ * 1. Copiar page-nosotros.php al child theme de Divergentes.
+ * 2. Copiar nosotros.css a /css/ del child theme.
+ * 3. Copiar nosotros.js a /css/ del child theme (o /js/ y actualizar la ruta en functions.php).
+ * 4. Añadir el enqueue de nosotros.css y nosotros.js en functions.php (ver snippet al final).
+ * 5. En WP Admin: Páginas > Nosotros > Plantilla > seleccionar "Nosotros".
+ *
+ * SNIPPET PARA functions.php DE DIVERGENTES:
+ * ---------------------------------------------------------------------------
+ * add_action( 'wp_enqueue_scripts', function() {
+ *     if ( is_page_template( 'page-nosotros.php' ) ) {
+ *         wp_enqueue_style(
+ *             'divergentes-nosotros',
+ *             get_stylesheet_directory_uri() . '/css/nosotros.css',
+ *             array(),
+ *             '1.0.0'
+ *         );
+ *         wp_enqueue_style(
+ *             'divergentes-nosotros-fonts',
+ *             'https://fonts.googleapis.com/css2?family=Anton&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
+ *             array(),
+ *             null
+ *         );
+ *         wp_enqueue_script(
+ *             'divergentes-nosotros-script',
+ *             get_stylesheet_directory_uri() . '/css/nosotros.js',
+ *             array(),
+ *             '1.0.0',
+ *             true
+ *         );
+ *     }
+ * });
+ * ---------------------------------------------------------------------------
+ *
+ * DESIGN SYSTEM:
+ * - Todas las clases propias usan el prefijo "nos-" (BEM).
+ * - No dependen de Bootstrap ni de clases de WordPress.
+ * - Los tokens están en nosotros.css como CSS custom properties bajo :root.
+ * - Para actualizar colores/tipografía: editar solo las variables en :root,
+ *   no tocar el HTML del template.
  */
 
+// Añade 'nosotros-page' al body para scope CSS si hace falta.
 add_filter( 'body_class', function( $classes ) {
     $classes[] = 'nosotros-page';
     return $classes;
 } );
 
-get_header();
+get_header(); // Header global de Divergentes — no modificar.
 ?>
 
+<!-- ═══════════════════════════════════════════════════════════════════════
+     PÁGINA NOSOTROS — DIVERGENTES
+     Contenido gestionado por el design system propio (prefijo nos-).
+     El header y footer son renderizados por el tema de Divergentes.
+════════════════════════════════════════════════════════════════════════ -->
 
-
-<!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
+<!-- ── HERO ──────────────────────────────────────────────────────────── -->
 <section class="nos-hero">
   <div class="nos-hero__grid">
     <div>
@@ -40,7 +91,7 @@ get_header();
 </section>
 
 
-<!-- ═══ CUERPO: ROSTER + SIDENAV ═════════════════════════════════════════ -->
+<!-- ── CUERPO: ROSTER + SIDENAV ──────────────────────────────────────── -->
 <div class="nos-page-body">
 
   <main class="nos-roster">
@@ -56,7 +107,7 @@ get_header();
 
         <div class="nos-card">
           <div class="nos-card__photo-wrap">
-            <?php /* Reemplazar con: <img class="nos-card__photo" src="<?php echo esc_url( get_template_directory_uri() ); ?>/img/equipo/hector-aaron.jpg" alt="Héctor Aarón Moe Aburto" /> */ ?>
+            <?php /* Cuando haya foto: <img class="nos-card__photo" src="..." alt="Héctor Aarón Moe Aburto"> */ ?>
             <div class="nos-card__initials">HA</div>
             <div class="nos-card__social">
               <a href="#" aria-label="Twitter / X">𝕏</a>
@@ -417,7 +468,7 @@ get_header();
 
   </main><!-- /nos-roster -->
 
-  <!-- SIDENAV DERECHA -->
+  <!-- ── SIDENAV DERECHA ── -->
   <aside class="nos-sidenav" aria-label="Ir a departamento">
     <span class="nos-sidenav__label">Equipo</span>
     <a href="#dir-general">Dirección General</a>
@@ -433,7 +484,7 @@ get_header();
 </div><!-- /nos-page-body -->
 
 
-<!-- ═══ FINANZAS Y ASUNTOS FISCALES ═══════════════════════════════════════ -->
+<!-- ── FINANZAS Y ASUNTOS FISCALES ── -->
 <section class="nos-finance" id="finanzas">
   <div class="nos-finance__inner">
     <p class="nos-finance__dept">Finanzas y<br>Asuntos Fiscales</p>
@@ -445,6 +496,4 @@ get_header();
   </div>
 </section>
 
-
-
-<?php get_footer(); ?>
+<?php get_footer(); // Footer global de Divergentes — no modificar. ?>
