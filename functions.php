@@ -2,88 +2,109 @@
 /**
  * Divergentes Child Theme — functions.php
  *
- * Solo encola assets adicionales.
- * El tema padre (divergentes) ya carga Bootstrap, jQuery y sus propios estilos.
+ * Orden de carga de assets:
+ *   1. Bootstrap / tema padre        (prioridad default de Understrap)
+ *   2. tokens-bridge.css             (prioridad 15 — después del padre)
+ *   3. Fuentes del design system     (prioridad 15 — junto al bridge)
+ *   4. nosotros.css                  (prioridad 20 — después del bridge)
+ *   5. nosotros.js                   (footer)
+ *
+ * Fuentes del design system:
+ *   Display: Sora
+ *   Body:    Source Serif 4
+ *   Mono:    JetBrains Mono
  */
 
-// ── 1. Heredar estilos del tema padre ──────────────────────────────────────
-add_action( 'wp_enqueue_scripts', 'divergentes_child_enqueue_styles' );
-function divergentes_child_enqueue_styles() {
 
-    // Hereda el stylesheet del padre
+// ── ESTILOS GLOBALES ────────────────────────────────────────────────────────
+
+add_action( 'wp_enqueue_scripts', function() {
+
+    // 1. Heredar stylesheet del tema padre
     wp_enqueue_style(
         'divergentes-parent-style',
         get_template_directory_uri() . '/style.css'
     );
 
-    // ── 2. Fuentes de la página Nosotros (solo en esa página) ──────────────
-    if ( is_page( 'nosotros' ) || is_page( 'quienes-somos' ) ) {
-
-        wp_enqueue_style(
-            'divergentes-nosotros-fonts',
-            'https://fonts.googleapis.com/css2?family=Anton&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
-            array(),
-            null
-        );
-
-        // ── 3. CSS exclusivo de Nosotros ───────────────────────────────────
-        wp_enqueue_style(
-            'divergentes-nosotros-style',
-            get_stylesheet_directory_uri() . '/css/nosotros.css',
-            array( 'divergentes-parent-style' ),
-            '1.0.0'
-        );
-
-        // ── 4. JS exclusivo de Nosotros (sidenav scroll) ───────────────────
-        wp_enqueue_script(
-            'divergentes-nosotros-script',
-            get_stylesheet_directory_uri() . '/css/nosotros.js',
-            array( 'jquery' ),  // depende de jQuery que ya carga el padre
-            '1.0.0',
-            true  // cargar en el footer
-        );
-    }
-}
-
-/**
- * Nota para desarrolladores:
- * Si la página "Nosotros" tiene un slug diferente (ej: "about", "equipo"),
- * agregarlo en el is_page() de arriba:
- *   is_page( array( 'nosotros', 'quienes-somos', 'equipo', 'about' ) )
- *
- * Para saber el slug exacto: WordPress Admin > Páginas > editar la página > ver URL permalink.
- */
-
-// ── 4. Cargar tokens del design system ─────────────────────────────────────
-add_action( 'wp_enqueue_scripts', function() {
+    // 2. Bridge de tokens — carga después del padre, antes que todo lo demás
+    //    Conecta el design system con Bootstrap y WordPress.
     wp_enqueue_style(
         'divergentes-tokens-bridge',
         get_stylesheet_directory_uri() . '/css/tokens-bridge.css',
-        array( 'understrap-styles' ),  // carga DESPUÉS de Bootstrap
+        array( 'divergentes-parent-style' ),
         '1.0.0'
     );
-}, 5 );
 
-// ── 5. Ocultar admin bar en el front-end ───────────────────────────────────
-/**
- * Ocultar admin bar en el front-end.
- * El layout tiene 32px de offset mientras esté activa.
- */
+    // 3. Fuentes globales del design system (Sora + Source Serif 4 + JetBrains Mono)
+    //    Se cargan en todas las páginas porque son las fuentes del sistema.
+    wp_enqueue_style(
+        'divergentes-ds-fonts',
+        'https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap',
+        array(),
+        null
+    );
+
+}, 15 );
+
+
+// ── ASSETS DE LA PÁGINA NOSOTROS ────────────────────────────────────────────
+
+add_action( 'wp_enqueue_scripts', function() {
+
+    if ( ! is_page_template( 'page-nosotros.php' ) ) {
+        return;
+    }
+
+    // nosotros.css depende del bridge para poder usar las variables CSS
+    wp_enqueue_style(
+        'divergentes-nosotros-style',
+        get_stylesheet_directory_uri() . '/css/nosotros.css',
+        array( 'divergentes-tokens-bridge' ),
+        '1.0.0'
+    );
+
+    // JS del sidenav (scroll activo)
+    wp_enqueue_script(
+        'divergentes-nosotros-script',
+        get_stylesheet_directory_uri() . '/css/nosotros.js',
+        array( 'jquery' ),
+        '1.0.0',
+        true
+    );
+
+    // Desactivar estilos de bloques de Gutenberg — no se usan en esta página
+    // y generan cascada inesperada con el design system
+    wp_dequeue_style( 'wp-block-library' );
+    wp_dequeue_style( 'wp-block-library-theme' );
+    wp_dequeue_style( 'global-styles' );
+    wp_dequeue_style( 'classic-theme-styles' );
+
+}, 20 );
+
+
+// ── ADMIN BAR ───────────────────────────────────────────────────────────────
+
+// Ocultar en el front-end — agrega 32px de offset al layout mientras esté activa
 add_filter( 'show_admin_bar', function( $show ) {
     return is_admin() ? $show : false;
 } );
 
-// ── 5. Desactivar estilos de bloques de WordPress en la página Nosotros ───────
-/**
- * Desactivar estilos de bloques de WordPress en la página Nosotros.
- * Elimina ~200 líneas de CSS de Gutenberg que no se usan
- * y que pueden crear cascada inesperada con el design system.
- */
-add_action( 'wp_enqueue_scripts', function() {
+
+// ── BODY CLASS ──────────────────────────────────────────────────────────────
+
+// Agrega 'nosotros-page' al body para scope CSS específico de la página
+add_filter( 'body_class', function( $classes ) {
     if ( is_page_template( 'page-nosotros.php' ) ) {
-        wp_dequeue_style( 'wp-block-library' );
-        wp_dequeue_style( 'wp-block-library-theme' );
-        wp_dequeue_style( 'global-styles' );
-        wp_dequeue_style( 'classic-theme-styles' );
+        $classes[] = 'nosotros-page';
     }
-}, 100 );
+    return $classes;
+} );
+
+
+/**
+ * NOTA PARA DIVERGENTES:
+ * Si la página tiene un slug diferente al asignado por el template,
+ * el template se identifica por nombre de archivo, no por slug.
+ * Asegurarse de que en WP Admin > Páginas > [esta página] > Plantilla
+ * esté seleccionada la opción "Nosotros".
+ */
