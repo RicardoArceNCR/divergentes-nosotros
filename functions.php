@@ -53,3 +53,42 @@ function divergentes_child_enqueue_styles() {
  *
  * Para saber el slug exacto: WordPress Admin > Páginas > editar la página > ver URL permalink.
  */
+
+// ── 4. Remover header y footer por defecto de Understrap ─────────────────────
+/**
+ * Remover header y footer por defecto de Understrap.
+ * Dejan activos los componentes .nos-masthead y .nos-footer propios.
+ */
+function divergentes_remove_understrap_header_footer() {
+    remove_action( 'understrap_header', 'understrap_header_markup_default', 10 );
+    remove_action( 'understrap_footer', 'understrap_footer_markup_default', 10 );
+    remove_action( 'understrap_footer', 'understrap_footer_markup_second',  10 );
+}
+add_action( 'init', 'divergentes_remove_understrap_header_footer' );
+
+// ── 5. Desactivar admin bar en el front-end ───────────────────────────────────
+/**
+ * Ocultar la admin bar en el front-end.
+ * El layout real tiene 32px menos de offset cuando esto está activo.
+ */
+function divergentes_disable_admin_bar() {
+    if ( ! is_admin() ) {
+        add_filter( 'show_admin_bar', '__return_false' );
+    }
+}
+add_action( 'after_setup_theme', 'divergentes_disable_admin_bar' );
+
+// ── 6. Desactivar block styles de WordPress en el template nosotros ─────────────
+/**
+ * Quitar los estilos de bloques de Gutenberg en el template nosotros.
+ * Elimina ~200 líneas de CSS que no se usan y crean cascada inesperada.
+ */
+function divergentes_dequeue_block_styles() {
+    if ( is_page_template( 'page-nosotros.php' ) ) {
+        wp_dequeue_style( 'wp-block-library' );
+        wp_dequeue_style( 'wp-block-library-theme' );
+        wp_dequeue_style( 'global-styles' );
+        wp_dequeue_style( 'classic-theme-styles' );
+    }
+}
+add_action( 'wp_enqueue_scripts', 'divergentes_dequeue_block_styles', 100 );

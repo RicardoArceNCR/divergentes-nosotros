@@ -2,42 +2,19 @@
 /**
  * Template Name: Nosotros
  *
- * Página del equipo de DIVERGENTES con el nuevo design system.
- * Asignar desde: WordPress Admin > Páginas > Nosotros > Plantilla > "Nosotros"
- *
- * Nota: usamos get_header() para cargar los scripts globales del tema padre
- * (jQuery, Bootstrap, etc.) pero ocultamos visualmente el header/footer del
- * padre via CSS (.nosotros-page selector en nosotros.css).
+ * Página del equipo de DIVERGENTES.
+ * Entregable para el sitio de Divergentes — solo contenido,
+ * sin header ni footer propios (los provee el tema del sitio).
  */
 
-// Añade la clase 'nosotros-page' al body para que el CSS sepa dónde aplicarse
 add_filter( 'body_class', function( $classes ) {
     $classes[] = 'nosotros-page';
     return $classes;
 } );
 
-get_header(); // Carga scripts globales del padre (jQuery, etc.)
+get_header();
 ?>
 
-<!-- ═══ MASTHEAD PROPIO ════════════════════════════════════════════════════ -->
-<header class="nos-masthead">
-  <div class="nos-masthead__inner">
-    <a class="nos-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="Divergentes">
-      <span class="nos-brand__mark">D<span class="nos-brand__dot">·</span></span>
-      <span class="nos-brand__name">DIVERGENTES</span>
-    </a>
-    <nav class="nos-masthead__nav" aria-label="Secciones">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Portada</a>
-      <a href="#">Reportajes</a>
-      <a href="#">Investigaciones</a>
-      <a href="#">Centroamérica</a>
-      <a href="#">Diver-Check</a>
-      <a href="#">Divergencias</a>
-      <a href="<?php echo esc_url( get_permalink() ); ?>" aria-current="page">Nosotros</a>
-    </nav>
-    <span class="nos-kicker">Periodismo desde el exilio</span>
-  </div>
-</header>
 
 
 <!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
@@ -469,24 +446,5 @@ get_header(); // Carga scripts globales del padre (jQuery, etc.)
 </section>
 
 
-<!-- ═══ FOOTER PROPIO ════════════════════════════════════════════════════ -->
-<footer class="nos-footer">
-  <div class="nos-footer__inner">
-    <div class="nos-footer__mark">D<span>·</span></div>
-    <nav class="nos-footer__links" aria-label="Footer">
-      <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Portada</a>
-      <a href="#">Divergencias</a>
-      <a href="#">Caricaturas</a>
-      <a href="#">Investigaciones</a>
-      <a href="#">Podcasts</a>
-      <a href="#">Videos</a>
-      <a href="<?php echo esc_url( get_permalink() ); ?>">Quiénes somos</a>
-      <a href="#">Equipo editorial</a>
-      <a href="#">Política editorial</a>
-      <a href="#">Contacto</a>
-    </nav>
-    <p class="nos-footer__credit">© 2020–<?php echo date('Y'); ?> DIVERGENTES. Todos los derechos reservados.</p>
-  </div>
-</footer>
 
-<?php get_footer(); // Necesario para que WP cierre correctamente scripts/hooks ?>
+<?php get_footer(); ?>
